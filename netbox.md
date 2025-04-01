@@ -53,3 +53,37 @@ spec:
       resources:
         requests:
           storage: 50Gi
+
+## 📌 Utilisation spécifique pour un environnement Telco
+
+- **Documentation des VLANs** utilisés pour chaque cluster (Production, Préproduction, Sandbox).
+- **Suivi des adresses IP allouées aux pods** dans chaque cluster.
+- **Suivi des VRFs et des routes associées** pour chaque environnement réseau (Test, Production, DevOps).
+- **Intégration avec NSX** pour mapper dynamiquement les IP Pools et les Load Balancers aux workloads OpenShift.
+
+---
+
+## 📊 Comparatif des alternatives
+
+| Outil                     | Description                                          | Avantages                           | Inconvénients                         | Intégration OpenShift |
+|---------------------------|------------------------------------------------------|------------------------------------|-------------------------------------|-----------------------|
+| **NetBox Operator**       | Gestion d'IPAM, DCIM en mode Kubernetes Operator.    | Automatisation, intégration native Kubernetes, API RESTful. | Complexité de configuration initiale. | ✅ |
+| **MetalLB**               | Load-balancer bare-metal compatible Kubernetes.     | Simple à déployer, natif Kubernetes. | Pas conçu pour l'IPAM ni DCIM. | ✅ (Load Balancer seulement) |
+| **Cilium**                | CNI avec gestion d'IP, sécurité et observabilité.    | Sécurité intégrée, visibilité complète. | Pas de gestion d’inventaire (DCIM). | ✅ |
+| **Infoblox**              | Solution commerciale pour IPAM.                     | Très robuste, support commercial. | Coût élevé, moins intégré à Kubernetes. | ❌ (Pas d’opérateur natif) |
+| **NSX-T**                 | Gestion avancée du réseau pour Kubernetes/OpenShift. | Sécurité avancée, intégration multi-cloud. | Complexité de configuration. | ✅ (Via NSX Container Plugin) |
+| **Calico**                | CNI pour Kubernetes avec politique réseau avancée.  | Sécurité avancée, simplicité. | Pas de gestion d’inventaire (DCIM). | ✅ |
+
+---
+
+## 💡 Pourquoi choisir NetBox Operator pour ton environnement ?
+
+- **Automatisation du déploiement** grâce aux CRDs Kubernetes.
+- **Documentation centralisée** de ton infrastructure réseau (IP, VLANs, VRFs, etc.).
+- **Suivi des flux réseau** (North-South & East-West) avec une vue complète.
+- **API RESTful** qui permet d'intégrer NetBox avec d'autres composants réseau (NSX, MRF Radisys).
+
+---
+
+Est-ce que tu veux que je te montre **comment automatiser la collecte des informations réseau avec NetBox Operator** dans ton OpenShift ? 😊
+

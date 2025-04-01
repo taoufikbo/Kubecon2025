@@ -276,48 +276,4 @@ cni-config:
       pod-cidr: "10.0.0.0/8"
       node-cidr-mask-size: 24
 
-## Simplifying Multi-Cluster Networking With Cilium and MCS-API
-
-Dans un environnement multi-cluster, la gestion du réseau entre plusieurs clusters Kubernetes peut être complexe. Heureusement, des solutions comme **Cilium** et **MCS-API** (Multi-Cluster Services API) facilitent cette gestion en simplifiant l'intégration et la communication entre les clusters. Voici un aperçu de ces deux technologies et comment elles peuvent simplifier le réseau multi-cluster.
-
-## 1. **Introduction à Cilium**
-
-Cilium est une plateforme de sécurité et de mise en réseau de niveau 7 (L7), basée sur **eBPF** (Extended Berkeley Packet Filter), permettant de sécuriser et d'optimiser le réseau entre les services dans Kubernetes. Il remplace des solutions classiques comme **iptables** par une approche plus flexible et évolutive grâce à eBPF.
-
-### Avantages de Cilium :
-- **Sécurité** : Mise en réseau sécurisée basée sur des politiques fines de sécurité de niveau 7.
-- **Performance** : Grâce à eBPF, Cilium peut filtrer les paquets et appliquer des politiques directement dans le noyau, ce qui offre une performance supérieure.
-- **Observabilité** : Il offre une visibilité complète sur le trafic réseau, facilitant le diagnostic des problèmes.
-
-## 2. **Introduction à MCS-API**
-
-Le **MCS-API** est une API Kubernetes qui permet la gestion des services entre plusieurs clusters. MCS-API fournit un mécanisme pour exposer des services d'un cluster à d'autres clusters, facilitant ainsi l'interconnexion des clusters Kubernetes.
-
-### Fonctionnalités clés de MCS-API :
-- **Exposition de services multi-clusters** : Permet à des services déployés dans un cluster d'être accessibles dans d'autres clusters, avec un mécanisme de découverte de services intégré.
-- **Harmonisation** : Offre un standard pour l'exposition des services entre clusters, rendant l'architecture multi-cluster plus simple.
-- **Sécurité et contrôle** : En combinaison avec Cilium, MCS-API permet de gérer les politiques de sécurité inter-clusters, assurant un contrôle de l'accès et de la communication.
-
-## 3. **Intégration de Cilium avec MCS-API**
-
-L'intégration de Cilium et de MCS-API offre une solution puissante pour simplifier le réseau dans des environnements multi-clusters.
-
-### Étapes de l'intégration :
-1. **Déploiement de Cilium** : Déployer Cilium dans chaque cluster Kubernetes pour assurer une gestion fine du réseau et de la sécurité.
-2. **Configuration de MCS-API** : Configurer les services à exposer à d'autres clusters à l'aide de MCS-API.
-3. **Gestion des politiques de sécurité** : Utiliser Cilium pour appliquer des politiques de sécurité réseau qui régissent comment les services dans différents clusters peuvent communiquer.
-4. **Découverte de services** : MCS-API assure que les services dans un cluster sont visibles et accessibles depuis d'autres clusters, en utilisant les mécanismes de découverte automatique.
-
-### Exemple de cas d’utilisation :
-- Une application déployée sur un cluster A peut appeler un service situé dans un cluster B. Cilium assure que la communication est sécurisée, tandis que MCS-API s'assure que le service est correctement exposé dans le cluster A.
-
-## 4. **Bénéfices de cette approche**
-- **Simplification de la gestion des clusters** : Les équipes peuvent gérer plusieurs clusters comme s'ils étaient un seul, avec un contrôle centralisé du réseau.
-- **Meilleure sécurité** : Grâce à Cilium, les communications inter-clusters sont sécurisées avec des politiques de sécurité granulaires.
-- **Scalabilité** : Cilium permet d'ajouter facilement de nouveaux clusters à l'architecture existante, tout en maintenant une gestion cohérente du réseau.
-- **Observabilité améliorée** : La visibilité et le suivi du trafic inter-clusters deviennent beaucoup plus simples.
-
-## 5. **Conclusion**
-
-L'intégration de **Cilium** et de **MCS-API** permet de simplifier la gestion du réseau dans des environnements multi-clusters Kubernetes. En combinant la puissance d'eBPF avec une API standardisée pour la gestion des services, cette approche permet d'assurer à la fois la sécurité, la performance et la simplicité dans les architectures multi-clusters.
-
+```

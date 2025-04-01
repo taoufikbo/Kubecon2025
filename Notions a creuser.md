@@ -323,3 +323,60 @@ L'intégration de Cilium et de MCS-API offre une solution puissante pour simplif
 
 L'intégration de **Cilium** et de **MCS-API** permet de simplifier la gestion du réseau dans des environnements multi-clusters Kubernetes. En combinant la puissance d'eBPF avec une API standardisée pour la gestion des services, cette approche permet d'assurer à la fois la sécurité, la performance et la simplicité dans les architectures multi-clusters.
 
+
+# Deep Dive : Cluster Mesh et Cilium
+
+## Cluster Mesh
+Le **Cluster Mesh** est une architecture permettant à plusieurs clusters Kubernetes (ou OpenShift) de se connecter entre eux pour créer un réseau unifié. Cela permet une communication transparente entre des applications réparties sur plusieurs clusters, qu'ils soient situés dans différentes régions ou clouds.
+
+### Fonctionnalités du Cluster Mesh
+- **Interconnexion des clusters** : Permet la communication entre des applications situées sur différents clusters.
+- **Haute disponibilité et résilience** : Les clusters peuvent se redonder pour garantir une disponibilité continue des applications.
+- **Centralisation de la gestion** : Facilite la gestion des ressources et de la connectivité entre les clusters.
+
+## Cilium
+**Cilium** est une solution basée sur **eBPF** (Extended Berkeley Packet Filter) pour la gestion du réseau, la sécurité et les politiques dans des environnements de microservices tels que Kubernetes. Cilium permet d'appliquer des politiques réseau granulaires et d'assurer la sécurité des communications entre les microservices.
+
+### Fonctionnalités de Cilium
+- **Sécurisation et filtrage du trafic réseau** : Utilise eBPF pour inspecter et filtrer le trafic réseau directement au niveau du noyau.
+- **Haute performance** : eBPF permet un traitement réseau ultra-rapide sans nécessiter de proxy ou de filtrage traditionnel.
+- **Visibilité et observabilité** : Offre une visibilité détaillée sur le trafic réseau entre les microservices, avec des outils d'observation intégrés.
+- **Support des politiques de sécurité fines** : Permet de définir des politiques réseau spécifiques pour chaque service ou groupe de services.
+
+## Tableau Comparatif : Cluster Mesh vs Cilium
+
+| Critère                        | Cluster Mesh                              | Cilium                                      |
+|---------------------------------|-------------------------------------------|---------------------------------------------|
+| **Type de technologie**         | Architecture multi-clusters               | Plateforme de gestion réseau basée sur eBPF |
+| **Cas d'utilisation principal** | Communication inter-clusters              | Sécurisation et gestion des réseaux         |
+| **Performance**                 | Dépend du mécanisme de connectivité       | Haute performance grâce à eBPF              |
+| **Sécurité**                    | Connectivité et résilience entre clusters | Filtrage et sécurité du trafic réseau       |
+| **Facilité de gestion**         | Centralisation de la gestion des clusters | Visibilité et gestion des politiques réseau |
+| **Utilisation de proxy**        | Peut nécessiter un proxy pour l'interconnexion | Pas besoin de proxy grâce à eBPF            |
+
+## Exemple de Cas d'Utilisation : Secteur des Télécommunications (Telco)
+
+### Contexte
+Dans un environnement de télécommunications, des services doivent être déployés sur plusieurs clusters Kubernetes situés dans différentes régions. Ces services sont souvent liés à des fonctions critiques telles que la gestion du trafic réseau, les services de médias, la gestion des données de l'utilisateur, etc. Un Cluster Mesh permet de connecter ces clusters tout en garantissant la résilience et la communication fluide entre eux.
+
+### Problématique
+- **Gestion de l'interconnexion entre plusieurs clusters** : Les applications doivent pouvoir communiquer entre différents centres de données géographiquement distribués.
+- **Sécurisation des communications** : Les communications entre clusters doivent être sécurisées et doivent respecter les politiques strictes du secteur des télécommunications.
+
+### Solution avec Cluster Mesh et Cilium
+1. **Cluster Mesh pour l'interconnexion** : 
+   - Permet aux services déployés dans des clusters distincts de fonctionner comme un réseau unifié.
+   - Assure que les applications restent disponibles même si un cluster subit une panne.
+   
+2. **Cilium pour la sécurité du réseau** :
+   - Utilisation de Cilium pour appliquer des politiques réseau fines et sécuriser les communications entre services dans différents clusters.
+   - Grâce à eBPF, Cilium peut appliquer des politiques de sécurité spécifiques et observer en temps réel le trafic réseau entre les microservices.
+   
+3. **Haute performance et résilience** :
+   - L'utilisation de Cilium garantit des performances optimales en évitant les surcharges traditionnelles des proxies.
+   - Le Cluster Mesh assure la résilience des services en cas de défaillance d'un cluster.
+
+### Résultats attendus
+- **Haute disponibilité** des services télécoms.
+- **Sécurisation** des données et des communications entre les différents clusters.
+- **Optimisation des performances** grâce à Cilium et eBPF.

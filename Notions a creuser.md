@@ -380,3 +380,34 @@ Dans un environnement de télécommunications, des services doivent être déplo
 - **Haute disponibilité** des services télécoms.
 - **Sécurisation** des données et des communications entre les différents clusters.
 - **Optimisation des performances** grâce à Cilium et eBPF.
+
+
+# Plongée en profondeur dans la passerelle de sortie Cilium
+
+La passerelle de sortie Cilium est une fonctionnalité conçue pour gérer et contrôler le trafic sortant des clusters Kubernetes vers des systèmes externes. Voici une exploration approfondie de ses fonctionnalités et avantages :
+
+1. **Routage et contrôle du trafic** :
+   - La passerelle de sortie permet un contrôle précis sur le routage du trafic des pods vers des nœuds de passerelle spécifiques. Cela est réalisé en appliquant des politiques de passerelle de sortie qui utilisent des sélecteurs d'étiquettes pour cibler des pods spécifiques [[:refs](1-1)](https://cilium.io/use-cases/egress-gateway/).
+   - Elle répond aux défis des adresses IP dynamiques dans Kubernetes en fournissant des adresses IP stables et prévisibles pour le trafic sortant, ce qui est crucial pour l'intégration avec des systèmes hérités et l'amélioration de la sécurité du réseau [[:refs](3-1)](https://cilium.io/use-cases/egress-gateway/).
+
+2. **Configuration et politiques** :
+   - Les politiques de passerelle de sortie peuvent être configurées pour router le trafic en fonction des CIDR de destination et spécifier l'adresse IP ou l'interface de sortie à utiliser. Cela garantit que le trafic provenant de certains pods est masqué avec des adresses IP prévisibles associées aux nœuds de passerelle [](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/).
+   - Les politiques peuvent également inclure des exceptions et des sélecteurs pour les pods et les nœuds, offrant une flexibilité dans la gestion du trafic [](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/).
+
+3. **Haute disponibilité et évolutivité** :
+   - Cilium Enterprise a introduit la haute disponibilité (HA) de la passerelle de sortie, prenant en charge plusieurs nœuds de sortie pour équilibrer la charge du trafic et fournir des options de secours en cas de défaillance des nœuds. Cela est essentiel pour les environnements d'entreprise nécessitant des solutions de routage réseau robustes [](https://isovalent.com/blog/post/cilium-egress-gateway-eks/).
+   - La configuration HA peut être réalisée en utilisant le paramètre `egressGroups` dans la spécification de la politique, permettant une distribution du trafic en round-robin sur plusieurs nœuds [](https://isovalent.com/blog/post/cilium-egress-gateway-eks/).
+
+4. **Cas d'utilisation** :
+   - La passerelle de sortie est particulièrement utile dans les clusters Kubernetes multi-locataires où différentes charges de travail doivent interagir avec divers systèmes externes ayant des exigences réseau spécifiques. Elle aide à répondre à ces exigences en permettant la configuration de règles de routage spécifiques aux charges de travail [[:refs](13-1)](https://cilium.io/use-cases/egress-gateway/).
+   - Elle est également bénéfique pour intégrer les services Kubernetes avec des pare-feu externes et assurer une communication fluide entre le cluster et les systèmes de sécurité externes [](https://www.tigera.io/learn/guides/kubernetes-networking/egress-gateway/).
+
+5. **Considérations de mise en œuvre** :
+   - L'activation de la fonctionnalité de passerelle de sortie nécessite l'activation du masquage BPF et du remplacement de kube-proxy dans la configuration de Cilium. De plus, les interfaces et adresses IP sur les nœuds de passerelle doivent être provisionnées et configurées par l'opérateur en fonction de leur environnement réseau [,](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/).
+   - Il est important de noter que la fonctionnalité de passerelle de sortie n'est pas compatible avec certaines autres fonctionnalités comme Cluster Mesh et CiliumEndpointSlice, et elle ne prend pas en charge le trafic IPv6 [](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/).
+
+6. **Dépannage et limitations** :
+   - Une utilisation élevée du mappage des ports SNAT peut entraîner des échecs de connexion de la passerelle de sortie. Pour atténuer cela, il est recommandé de réduire le nombre de connexions SNATées à travers une passerelle de sortie en divisant le trafic via différentes adresses IP de sortie et/ou adresses de points de terminaison distants [](https://docs.cilium.io/en/latest/network/egress-gateway/egress-gateway-troubleshooting/).
+   - En cas de problèmes, le dépannage implique la vérification de la configuration de sortie dans l'agent Cilium et la confirmation que les pods et les nœuds de sortie sont correctement étiquetés pour correspondre aux sélecteurs de politique [](https://docs.cilium.io/en/stable/network/egress-gateway/egress-gateway/).
+
+En résumé, la passerelle de sortie Cilium offre une solution puissante pour gérer le trafic sortant dans les clusters Kubernetes, offrant un contrôle, une stabilité et une sécurité améliorés pour les communications réseau.

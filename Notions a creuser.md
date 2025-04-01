@@ -276,7 +276,7 @@ cni-config:
       pod-cidr: "10.0.0.0/8"
       node-cidr-mask-size: 24
 
-# Simplifying Multi-Cluster Networking With Cilium and MCS-API
+## Simplifying Multi-Cluster Networking With Cilium and MCS-API
 
 Dans un environnement multi-cluster, la gestion du réseau entre plusieurs clusters Kubernetes peut être complexe. Heureusement, des solutions comme **Cilium** et **MCS-API** (Multi-Cluster Services API) facilitent cette gestion en simplifiant l'intégration et la communication entre les clusters. Voici un aperçu de ces deux technologies et comment elles peuvent simplifier le réseau multi-cluster.
 

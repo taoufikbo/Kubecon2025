@@ -232,3 +232,46 @@ Pour optimiser la gestion de la mémoire et éviter des problèmes de performanc
 ## 5. **Conclusion**
 
 Conntrack est un composant essentiel du noyau Linux pour le suivi des connexions réseau, et la gestion de la mémoire par le biais de la Garbage Collection (GC) joue un rôle clé dans la stabilité et la performance du système. En comprenant le fonctionnement de la GC et en ajustant les paramètres de manière appropriée, les administrateurs peuvent garantir que le système continue de gérer efficacement les connexions réseau, même dans des environnements à fort trafic.
+
+# **Cilium IPAM Deep Dive avec Comparaison des Alternatives**
+
+Cilium prend en charge plusieurs modes d’IPAM en fonction de l'environnement et des besoins. Voici un **tableau comparatif détaillé** pour comprendre les différences entre chaque mode.
+
+---
+
+## **1. Modes d’IPAM supportés par Cilium**
+
+| **Mode d’IPAM**         | **Description**                                                                                     | **Scénarios d’utilisation**                   | **Avantages**                                                   | **Inconvénients**                                                 |
+|-------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------|------------------------------------------------------------------|------------------------------------------------------------------|
+| **Kubernetes (Cluster) IPAM** | IPAM standard de Kubernetes géré par le composant `kube-controller-manager`.                      | Déploiements Kubernetes classiques.         | - Simple à configurer.  <br> - Compatible avec tous les CNI.    | - Manque de visibilité fine sur les adresses IP. <br> - Moins performant qu’eBPF. |
+| **Cilium Native IPAM**   | Géré directement par Cilium. Allocation à partir de pools d’adresses configurables par l’utilisateur. | Environnements où la performance est critique (eBPF).             | - Visibilité avancée sur les adresses IP. <br> - Allocation optimisée. <br> - Compatible avec IPv4 et IPv6. | - Configuration complexe. <br> - Peut nécessiter une personnalisation importante. |
+| **AWS IPAM**            | Intégration avec l’API EC2 pour attribuer des **Elastic IPs** ou **Secondary IPs** aux Pods.        | Clusters Kubernetes sur AWS.               | - Allocation automatique via API. <br> - Compatible avec VPC CNI. | - Dépendant de l’infrastructure AWS. <br> - Coût potentiel élevé. |
+| **Azure IPAM**          | Intégration avec Azure pour allouer des **Secondary IPs** directement aux Pods.                     | Clusters Kubernetes sur Azure.            | - Utilisation efficace des IPs Azure. <br> - Intégration native. | - Limité aux environnements Azure. <br> - Complexité de configuration. |
+| **GCP IPAM**            | Utilisation des **Alias IPs** pour allouer des adresses IP aux Pods.                                | Clusters Kubernetes sur GCP.              | - Bonne intégration avec GCP. <br> - Performances optimisées.   | - Fonctionnalités limitées par rapport à Cilium Native IPAM. |
+| **External IPAM**       | API personnalisée pour gérer l’allocation des IPs via une application externe.                     | Environnements hybrides ou spécifiques.   | - Très flexible. <br> - Compatible avec des systèmes tiers.    | - Complexité d’implémentation. <br> - Maintenance potentiellement lourde. |
+
+---
+
+## **2. Fonctionnement de chaque mode IPAM**
+
+### **a. Kubernetes (Cluster) IPAM**
+- Repose sur les **CIDR pools** configurés au niveau du cluster.
+- Attribution des adresses par `kube-controller-manager`.
+- Limité par les capacités du réseau configuré (par exemple, Calico ou Flannel).
+
+### **b. Cilium Native IPAM**
+- Géré par Cilium directement via son contrôleur CNI.
+- Les adresses sont allouées à partir de pools configurés (`podCIDR`, `clusterCIDR`).
+- Prend en charge l’**IPv4 et l’IPv6**.
+- Support des **tunnels (VXLAN, Geneve)** ou **routage direct (Direct Routing)**.
+- Optimisation des allocations pour éviter la fragmentation des IPs.
+
+**Exemple de configuration :**
+
+```yaml
+cni-config:
+  ipam:
+    mode: "cluster-pool"
+    cluster-pool:
+      pod-cidr: "10.0.0.0/8"
+      node-cidr-mask-size: 24

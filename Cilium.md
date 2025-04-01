@@ -103,4 +103,3 @@ Voici un diagramme montrant comment **Cilium utilise eBPF pour fournir des fonct
 
 ---
 
-Ce fichier est maintenant prêt à être ajouté à ton dépôt GitHub ! Tu veux que je te montre comment ajouter **des diagrammes supplémentaires ou une analyse plus poussée des performances eBPF vs iptables ?** 😊

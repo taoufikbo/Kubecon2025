@@ -1,5 +1,11 @@
 # 🌟 Kubeflow : Analyse approfondie
 
+## Sommaire
+1. [Présentation détaillée](#-1-présentation-détaillée)
+2. [Comparatif avec les concurrents](#-2-comparatif-avec-les-concurrents)
+3. [Use case concret sur OpenShift](#-3-use-case-concret-sur-openshift)
+4. [Pourquoi Kubeflow ?](#-4-pourquoi-kubeflow-)
+
 ## 🚀 1. Présentation détaillée  
 Kubeflow est une plateforme open-source qui facilite l’**automatisation, le déploiement et la gestion** des workflows de Machine Learning sur Kubernetes.  
 

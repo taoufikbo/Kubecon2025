@@ -37,3 +37,15 @@ Kubeflow est une plateforme open-source qui facilite l’**automatisation, le d�
 5. **Monitoring :** Intégration avec Prometheus et Grafana pour surveiller les performances.  
 
 ### Diagramme (texte) :  
+
+
+
+---
+
+## ✅ Pourquoi Kubeflow ?  
+1. **Scalabilité :** S’adapte à des charges de travail croissantes sur OpenShift.  
+2. **Automatisation :** Pipelines automatisés pour l'entraînement et le déploiement.  
+3. **Flexibilité :** S’intègre aux outils existants (Prometheus, Grafana).  
+4. **Interopérabilité :** Compatible avec plusieurs frameworks (TensorFlow, PyTorch).  
+
+---

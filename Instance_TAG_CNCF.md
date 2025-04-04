@@ -1,4 +1,4 @@
-# CNCF Network TAG
+# CNCF Network TAG + SLACK +GITHUB
 
 ## Introduction
 Le **CNCF Network TAG** (*Technical Advisory Group*) est un groupe au sein de la **Cloud Native Computing Foundation (CNCF)** qui se concentre sur les standards, les bonnes pratiques et les innovations autour des réseaux dans Kubernetes et les environnements cloud-native.
